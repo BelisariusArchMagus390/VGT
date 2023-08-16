@@ -1,7 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from .tab_lexic_table import Tab_lexic_table
-from .tab_symbol_table import Tab_symbol_table
 
 
 class Frame_tables:
