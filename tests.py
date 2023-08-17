@@ -17,11 +17,10 @@ cargas_portos = pd.read_excel(file)
 
 years = [2011]
 
-harbors = ['Guaruja']
+harbors = ["Guaruja"]
 
-cargas_portos_year = cargas_portos.loc[(cargas_portos['Ano'].isin(years))]
+cargas_portos_year = cargas_portos.loc[(cargas_portos["Ano"].isin(years))]
 
-cargas_portos_year = cargas_portos_year.loc[(cargas_portos['Porto'].isin(harbors))]
+cargas_portos_year = cargas_portos_year.loc[(cargas_portos["Porto"].isin(harbors))]
 
 print(cargas_portos_year)
-
