@@ -10,7 +10,7 @@ import pandas as pd
 
 
 class Tab_table:
-    def __init__(self, my_notebook: ttk.Notebook, root, data):
+    def __init__(self, my_notebook: ttk.Notebook, data):
         self.data = data
 
         file = Path(__file__).parent.joinpath("data").joinpath("cargas2011a2021.xlsx")
@@ -23,15 +23,12 @@ class Tab_table:
         self.df = port_cargo_year.to_numpy().tolist()
 
         self.my_notebook = my_notebook
-        self.root = root
+        # self.root = root
         self.bg_color = "#313131"
         self.fg_color = "#ffffff"
 
-        self.frame = ttk.Frame(self.my_notebook)
-        self.frame.pack(fill="both", expand=1)
-
         self.tree_frame = ttk.Frame(self.my_notebook)
-        self.tree_frame.pack()
+        self.tree_frame.pack(fill="both", expand=1)
 
         # Scrollbar vertical da Text box
         self.tree_scroll = ttk.Scrollbar(self.tree_frame)
@@ -48,37 +45,54 @@ class Tab_table:
 
         # Define o nome das colunas
         self.my_tree["columns"] = (
-            "Lexema",
-            "Token",
-            "Linha",
-            "Coluna",
-            "Tipo Token",
-            "ID",
+            "Ano",
+            "UF",
+            "Porto",
+            "TipoNavegacao",
+            "Sentido",
+            "CDMercadoria",
+            "TEU",
+            "QTCarga",
+            "PesoCargaBruta",
+            "PesoCargaLiquida",
+            "ValorKgCarga",
         )
 
         # Formatando as colunas
         self.my_tree.column("#0", width=0, stretch=NO)
-        self.my_tree.column("Lexema", anchor="w", width=140)
-        self.my_tree.column("Token", anchor="w", width=140)
-        self.my_tree.column("Linha", anchor="w", width=140)
-        self.my_tree.column("Coluna", anchor="w", width=140)
-        self.my_tree.column("Tipo Token", anchor="w", width=140)
-        self.my_tree.column("ID", anchor="center", width=100)
+        self.my_tree.column("Ano", anchor="center", width=100)
+        self.my_tree.column("UF", anchor="center", width=100)
+        self.my_tree.column("Porto", anchor="center", width=140)
+        self.my_tree.column("TipoNavegacao", anchor="center", width=140)
+        self.my_tree.column("Sentido", anchor="center", width=140)
+        self.my_tree.column("CDMercadoria", anchor="center", width=140)
+        self.my_tree.column("TEU", anchor="center", width=140)
+        self.my_tree.column("QTCarga", anchor="center", width=140)
+        self.my_tree.column("PesoCargaBruta", anchor="center", width=140)
+        self.my_tree.column("PesoCargaLiquida", anchor="center", width=140)
+        self.my_tree.column("ValorKgCarga", anchor="center", width=100)
 
         # Criando Headings
         self.my_tree.heading("#0", text="", anchor="w")
-        self.my_tree.heading("Lexema", text="Lexema", anchor="w")
-        self.my_tree.heading("Token", text="Token", anchor="w")
-        self.my_tree.heading("Linha", text="Linha", anchor="w")
-        self.my_tree.heading("Coluna", text="Coluna", anchor="w")
-        self.my_tree.heading("Tipo Token", text="Tipo Token", anchor="w")
-        self.my_tree.heading("ID", text="ID", anchor="center")
+        self.my_tree.heading("Ano", text="Ano", anchor="center")
+        self.my_tree.heading("UF", text="UF", anchor="center")
+        self.my_tree.heading("Porto", text="Porto", anchor="center")
+        self.my_tree.heading("TipoNavegacao", text="TipoNavegacao", anchor="center")
+        self.my_tree.heading("Sentido", text="Sentido", anchor="center")
+        self.my_tree.heading("CDMercadoria", text="CDMercadoria", anchor="center")
+        self.my_tree.heading("TEU", text="TEU", anchor="center")
+        self.my_tree.heading("QTCarga", text="QTCarga", anchor="center")
+        self.my_tree.heading("PesoCargaBruta", text="PesoCargaBruta", anchor="center")
+        self.my_tree.heading(
+            "PesoCargaLiquida", text="PesoCargaLiquida", anchor="center"
+        )
+        self.my_tree.heading("ValorKgCarga", text="ValorKgCarga", anchor="center")
 
         # Inserindo dados na TreeView
-        for value_df in self.df:
-            self.my_tree.insert("", END, values=value_df)
+        for value in self.data:
+            self.my_tree.insert("", END, values=value)
 
-        self.my_notebook.add(self.tree_frame, text="Lexic Table")
+        self.my_notebook.add(self.tree_frame, text="Cluster 1")
 
     # def close_tab(self, _=None):
     #    self.frame.destroy()

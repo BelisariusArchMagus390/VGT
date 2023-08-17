@@ -64,11 +64,13 @@ class Tab_lexic_table:
         self.my_tree.heading("TEU", text="TEU", anchor="center")
         self.my_tree.heading("QTCarga", text="QTCarga", anchor="center")
         self.my_tree.heading("PesoCargaBruta", text="PesoCargaBruta", anchor="center")
-        self.my_tree.heading("PesoCargaLiquida", text="PesoCargaLiquida", anchor="center")
+        self.my_tree.heading(
+            "PesoCargaLiquida", text="PesoCargaLiquida", anchor="center"
+        )
         self.my_tree.heading("ValorKgCarga", text="ValorKgCarga", anchor="center")
 
         # Inserindo dados na TreeView
         for token in self.data:
             self.my_tree.insert("", END, values=token)
 
-        self.my_notebook.add(self.tree_frame, text="Lexic Table")
+        self.my_notebook.add(self.tree_frame, text="Cluster 1")

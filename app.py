@@ -4,6 +4,7 @@ from tkinter import filedialog
 from pathlib import Path
 from .tab import Tab_table
 import os
+from .cluster_algor import Cluster
 
 
 class App:
@@ -28,7 +29,7 @@ class App:
         self.my_notebook = ttk.Notebook(self.root)
         self.my_notebook.pack(pady=15)
 
-        # self.tabs = []
+        self.tabs = []
 
         # tab = Tab_editor(self.my_notebook, self.status_bar, self.root)
         # self.tabs.append(tab)
@@ -47,7 +48,11 @@ class App:
         self.graph_menu = Menu(self.my_menu, tearoff=False)
         self.my_menu.add_cascade(label="Gráficos", menu=self.graph_menu)
         self.graph_menu.add_command(
-            label="Novo gráfico", command=self.new_graph, accelerator="Ctrl + F"
+            label="Novo gráfico", command=self.new_graph, accelerator="Ctrl + G"
+        )
+        self.graph_menu.add_separator()
+        self.graph_menu.add_command(
+            label="Novo mapa", command=self.new_map, accelerator="Ctrl + M"
         )
 
         # Adiciona View Menu
@@ -68,7 +73,8 @@ class App:
         self.root.bind("<F5>", self.execute)
 
         # Atalho de novo gráfico
-        self.root.bind("<Control-Key-f>", self.new_graph)
+        self.root.bind("<Control-Key-g>", self.new_graph)
+        self.root.bind("<Control-Key-m>", self.new_map)
 
         # Atalhos de View
         # self.root.bind("<Control-Key-d>", self.change_theme_dark)
@@ -77,9 +83,6 @@ class App:
         # Atalho para mudar de Tab
         self.root.bind("<Control-KeyPress-Tab>", self.change_tab)
 
-        # Associando a função ao evento de mudança de tab
-        self.my_notebook.bind("<<NotebookTabChanged>>", self.on_tab_text_change)
-
     def change_tab(self):
         idx = self.my_notebook.index(self.my_notebook.select())
         qt_tabs = self.my_notebook.index("end")
@@ -87,21 +90,23 @@ class App:
         if (idx + 1) < qt_tabs:
             self.my_notebook.select(idx + 1)
 
-    def on_tab_text_change(self, event):
-        tab = self.get_tab()
-        self.status_bar.config(text=f"{tab.get_text_status_bar()}        ")
-        self.root.title(f"{tab.get_text_title()} - TextPad")
-
     def execute(self, _=None):
-        tab = self.get_tab()
-        tab.execute()
+        cluster_algor = Cluster()
+        data = cluster_algor.get_data()
+
+        for cluster in data:
+            tab = Tab_table(self.my_notebook, cluster)
+            self.tabs.append(tab)
 
     def get_tab(self):
         idx = self.my_notebook.index(self.my_notebook.select())
         tab = self.tabs[idx]
         return tab
 
-    def new_graph():
+    def new_graph(self, _=None):
+        pass
+
+    def new_map(self, _=None):
         pass
 
     """def close_tab(self, _=None):
