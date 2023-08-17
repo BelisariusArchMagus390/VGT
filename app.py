@@ -2,9 +2,10 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 from pathlib import Path
-from .tab import Tab_table
+from tab import Tab_table
 import os
-from .cluster_algor import Cluster
+from cluster_algor import Cluster
+import pandas as pd
 
 
 class App:
@@ -94,8 +95,11 @@ class App:
         cluster_algor = Cluster()
         data = cluster_algor.get_data()
 
+        file = Path(__file__).parent.joinpath("data").joinpath("cargas2011a2021.xlsx")
+        port_cargo = pd.read_excel(file)
+
         for cluster in data:
-            tab = Tab_table(self.my_notebook, cluster)
+            tab = Tab_table(self.my_notebook, cluster, port_cargo)
             self.tabs.append(tab)
 
     def get_tab(self):

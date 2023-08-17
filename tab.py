@@ -10,11 +10,8 @@ import pandas as pd
 
 
 class Tab_table:
-    def __init__(self, my_notebook: ttk.Notebook, data):
+    def __init__(self, my_notebook: ttk.Notebook, data, port_cargo):
         self.data = data
-
-        file = Path(__file__).parent.joinpath("data").joinpath("cargas2011a2021.xlsx")
-        port_cargo = pd.read_excel(file)
 
         years = port_cargo["Ano"].drop_duplicates().to_list()
         port_cargo_year = port_cargo.loc[(port_cargo["Ano"].isin(years))]
