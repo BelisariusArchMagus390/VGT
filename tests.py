@@ -10,12 +10,11 @@ from IPython.display import display
 # To do: fazer um script para atualizar de forma automática
 
 file = Path(__file__).parent.joinpath("data").joinpath("cargas2011a2021.xlsx")
-
 cargas_portos = pd.read_excel(file)
 
-# years = cargas_portos['Ano'].drop_duplicates().to_list()
+years = cargas_portos["Ano"].drop_duplicates().to_list()
 
-years = [2011]
+# years = [2011]
 
 harbors = ["Guaruja"]
 
@@ -23,4 +22,4 @@ cargas_portos_year = cargas_portos.loc[(cargas_portos["Ano"].isin(years))]
 
 cargas_portos_year = cargas_portos_year.loc[(cargas_portos["Porto"].isin(harbors))]
 
-print(cargas_portos_year)
+cargas_portos_filtered = cargas_portos_year.to_numpy().tolist()

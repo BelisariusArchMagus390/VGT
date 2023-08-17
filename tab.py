@@ -6,10 +6,22 @@ from pathlib import Path
 import os
 import sys
 import re
+import pandas as pd
 
 
 class Tab_table:
-    def __init__(self, my_notebook: ttk.Notebook, root):
+    def __init__(self, my_notebook: ttk.Notebook, root, data):
+        self.data = data
+
+        file = Path(__file__).parent.joinpath("data").joinpath("cargas2011a2021.xlsx")
+        port_cargo = pd.read_excel(file)
+
+        years = port_cargo["Ano"].drop_duplicates().to_list()
+        port_cargo_year = port_cargo.loc[(port_cargo["Ano"].isin(years))]
+        port_cargo_year = port_cargo_year.loc[(port_cargo["Porto"].isin(data))]
+
+        self.df = port_cargo_year.to_numpy().tolist()
+
         self.my_notebook = my_notebook
         self.root = root
         self.bg_color = "#313131"
@@ -17,8 +29,6 @@ class Tab_table:
 
         self.frame = ttk.Frame(self.my_notebook)
         self.frame.pack(fill="both", expand=1)
-
-        self.data = data
 
         self.tree_frame = ttk.Frame(self.my_notebook)
         self.tree_frame.pack()
@@ -65,30 +75,17 @@ class Tab_table:
         self.my_tree.heading("ID", text="ID", anchor="center")
 
         # Inserindo dados na TreeView
-        for token in self.data:
-            self.my_tree.insert("", END, values=token)
+        for value_df in self.df:
+            self.my_tree.insert("", END, values=value_df)
 
         self.my_notebook.add(self.tree_frame, text="Lexic Table")
-
-    def execute(self, _=None):
-        pass
 
     # def close_tab(self, _=None):
     #    self.frame.destroy()
 
-    def close_output_terminal(self, _=None):
-        self.fr_output.destroy()
-        self.my_text.config(height=23)
-
-    def change_color(self, bg_color, fg_color):
+    """def change_color(self, bg_color, fg_color):
         self.my_text.config(background=bg_color, fg=fg_color)
         self.txt_box_output.config(background=bg_color, fg=fg_color)
         self.linenumbers.configure(bg=bg_color)
         self.bg_color = bg_color
-        self.fg_color = fg_color
-
-    def get_text_status_bar(self):
-        return self.text_status_bar
-
-    def get_text_title(self):
-        return self.text_title
+        self.fg_color = fg_color"""
