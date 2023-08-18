@@ -18,8 +18,10 @@ years = cargas_portos["Ano"].drop_duplicates().to_list()
 
 harbors = ["Guaruja"]
 
-cargas_portos_year = cargas_portos.loc[(cargas_portos["Ano"].isin(years))]
+print(type(years[0]))
 
-cargas_portos_year = cargas_portos_year.loc[(cargas_portos["Porto"].isin(harbors))]
+# cargas_portos_year = cargas_portos.loc[(cargas_portos["Ano"].isin(years))]
 
-cargas_portos_filtered = cargas_portos_year.to_numpy().tolist()
+# cargas_portos_year = cargas_portos_year.loc[(cargas_portos["Porto"].isin(harbors))]
+
+# cargas_portos_filtered = cargas_portos_year.to_numpy().tolist()
