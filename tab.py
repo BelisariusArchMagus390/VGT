@@ -21,6 +21,12 @@ class Tab_table:
         self.tree_frame = ttk.Frame(self.my_notebook)
         self.tree_frame.pack(fill="both", expand=1)
 
+        self.years_options = ttk.Combobox(
+            self.tree_frame, state="readonly", values=["Todos os anos"] + years
+        )
+        self.years_options.current(0)
+        self.years_options.pack(padx=5, pady=5)
+
         # Scrollbar vertical da Text box
         self.tree_scroll = ttk.Scrollbar(self.tree_frame)
         # Pack da Scrollbar
