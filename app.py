@@ -32,9 +32,6 @@ class App:
 
         self.tabs = []
 
-        # tab = Tab_editor(self.my_notebook, self.status_bar, self.root)
-        # self.tabs.append(tab)
-
         # Menu
         self.my_menu = Menu(self.root)
         self.root.config(menu=self.my_menu)
@@ -84,7 +81,7 @@ class App:
         # Atalho para mudar de Tab
         self.root.bind("<Control-KeyPress-Tab>", self.change_tab)
 
-    def change_tab(self):
+    def change_tab(self, _=None):
         idx = self.my_notebook.index(self.my_notebook.select())
         qt_tabs = self.my_notebook.index("end")
 

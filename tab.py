@@ -11,13 +11,9 @@ import pandas as pd
 
 class Tab_table:
     def __init__(self, my_notebook: ttk.Notebook, data, port_cargo):
-        self.data = data
-
         years = port_cargo["Ano"].drop_duplicates().to_list()
         port_cargo_year = port_cargo.loc[(port_cargo["Ano"].isin(years))]
         port_cargo_year = port_cargo_year.loc[(port_cargo["Porto"].isin(data))]
-
-        self.df = port_cargo_year.to_numpy().tolist()
 
         self.my_notebook = my_notebook
         # self.root = root
@@ -33,7 +29,10 @@ class Tab_table:
         self.tree_scroll.pack(side="right", fill="y")
 
         self.my_tree = ttk.Treeview(
-            self.tree_frame, yscrollcommand=self.tree_scroll.set, selectmode="extended"
+            self.tree_frame,
+            yscrollcommand=self.tree_scroll.set,
+            selectmode="extended",
+            height=500,
         )
         self.my_tree.pack()
 
@@ -86,8 +85,8 @@ class Tab_table:
         self.my_tree.heading("ValorKgCarga", text="ValorKgCarga", anchor="center")
 
         # Inserindo dados na TreeView
-        for value in self.data:
-            self.my_tree.insert("", END, values=value)
+        for index, row in port_cargo_year.iterrows():
+            self.my_tree.insert("", 0, text=index, values=list(row))
 
         self.my_notebook.add(self.tree_frame, text="Cluster 1")
 
