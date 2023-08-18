@@ -11,7 +11,7 @@ class App:
     def __init__(self):
         self.root = Tk()
         self.root.title("TextPad")
-        self.root.geometry("1200x35")
+        self.root.geometry("1200x30")
 
         # https://acervolima.com/o-que-o-atributo-tearoff-faz-em-um-menu-tkinter/
         self.root.option_add("*tearOff", False)
