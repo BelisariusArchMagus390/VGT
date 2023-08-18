@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter import filedialog
 from pathlib import Path
 from tab import Tab_table
 import os

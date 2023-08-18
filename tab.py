@@ -1,11 +1,5 @@
-import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from tkinter import filedialog
-from pathlib import Path
-import os
-import sys
-import re
 import pandas as pd
 
 
