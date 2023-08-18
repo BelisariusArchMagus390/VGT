@@ -11,7 +11,7 @@ class App:
     def __init__(self):
         self.root = Tk()
         self.root.title("TextPad")
-        self.root.geometry("1200x680")
+        self.root.geometry("1200x35")
 
         # https://acervolima.com/o-que-o-atributo-tearoff-faz-em-um-menu-tkinter/
         self.root.option_add("*tearOff", False)
@@ -88,6 +88,7 @@ class App:
             self.my_notebook.select(idx + 1)
 
     def execute(self, _=None):
+        self.root.geometry("1200x680")
         cluster_algor = Cluster()
         data = cluster_algor.get_data()
 
