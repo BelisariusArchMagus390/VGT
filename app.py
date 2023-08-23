@@ -13,7 +13,6 @@ class App:
         self.root.title("TextPad")
         self.root.geometry("1200x30")
 
-        # https://acervolima.com/o-que-o-atributo-tearoff-faz-em-um-menu-tkinter/
         self.root.option_add("*tearOff", False)
 
         self.style = ttk.Style(self.root)
@@ -69,8 +68,6 @@ class App:
             accelerator="Ctrl+L",
         )"""
 
-        # self.root.bind("<Control-F4>", self.close_tab)
-
         # Atalho de Run
         self.root.bind("<F5>", self.execute)
 
@@ -114,11 +111,6 @@ class App:
 
     def new_map(self, _=None):
         pass
-
-    """def close_tab(self, _=None):
-        if len(self.tabs) != 1:
-            tab = self.get_tab()
-            tab.close_tab()"""
 
     """def change_theme_light(self):
         bg_color = "#ffffff"

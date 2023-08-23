@@ -3,6 +3,7 @@ from pathlib import Path
 from IPython.display import display
 
 # Links: https://www.youtube.com/watch?v=w5JhFN0CwOE
+#        https://acervolima.com/o-que-o-atributo-tearoff-faz-em-um-menu-tkinter/
 
 # Help
 # pip freeze > requirements.txt

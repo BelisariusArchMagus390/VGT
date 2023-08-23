@@ -83,9 +83,6 @@ class Tab_table:
         for index, row in port_cargo_filtered.iterrows():
             self.my_tree.insert("", "end", text=index, value=list(row))
 
-    # def close_tab(self, _=None):
-    #    self.frame.destroy()
-
     """def change_color(self, bg_color, fg_color):
         self.my_text.config(background=bg_color, fg=fg_color)
         self.txt_box_output.config(background=bg_color, fg=fg_color)
