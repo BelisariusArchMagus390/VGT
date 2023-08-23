@@ -16,34 +16,22 @@ class Tab_table:
         self.tree_frame = ttk.Frame(self.my_notebook)
         self.tree_frame.pack(fill="both", expand=1)
 
-        self.years_options = ttk.Combobox(
-            self.tree_frame, state="readonly", values=["Todos os anos"] + self.years
-        )
-        self.years_options.pack(padx=5, pady=5)
-
         # Scrollbar vertical da Text box
         self.tree_scroll = ttk.Scrollbar(self.tree_frame)
         # Pack da Scrollbar
         self.tree_scroll.pack(side="right", fill="y")
 
-        self.my_tree = ttk.Treeview(self.tree_frame)
+        self.years_options = ttk.Combobox(
+            self.tree_frame, state="readonly", values=["Todos os anos"] + self.years
+        )
+        self.years_options.current(0)
+        self.years_options.pack(padx=5, pady=5)
 
-        self.my_notebook.add(self.tree_frame, text="Cluster 1")
+        # Evento que se ativa sempre que for selecionado uma opção no Combobox
+        self.years_options.bind("<<ComboboxSelected>>", self.filter_table)
 
-        self.years_options.bind("<<ComboboxSelected>>", self.create_treeview)
-
-    def create_treeview(self, _=None):
-        self.my_tree.destroy()
-
-        option = self.years_options.get()
-
-        if option != "Todos os anos":
-            self.years = [int(option)]
-
-        port_cargo_year = self.port_cargo.loc[(self.port_cargo["Ano"].isin(self.years))]
-        self.port_cargo = port_cargo_year.loc[
-            (port_cargo_year["Porto"].isin(self.data))
-        ]
+        # Define o nome das colunas
+        columns = list(self.port_cargo.columns)
 
         self.my_tree = ttk.Treeview(
             self.tree_frame,
@@ -51,59 +39,49 @@ class Tab_table:
             selectmode="extended",
             height=500,
         )
-        self.my_tree.pack()
+        self.my_tree["columns"] = columns
+        self.my_tree.pack(expand=TRUE, fill=BOTH)
 
         # Configuração da Scrollbar
         self.tree_scroll.config(command=self.my_tree.yview)
 
-        # Define o nome das colunas
-        self.my_tree["columns"] = (
-            "Ano",
-            "UF",
-            "Porto",
-            "TipoNavegacao",
-            "Sentido",
-            "CDMercadoria",
-            "TEU",
-            "QTCarga",
-            "PesoCargaBruta",
-            "PesoCargaLiquida",
-            "ValorKgCarga",
-        )
-
-        # Formatando as colunas
-        self.my_tree.column("#0", width=0, stretch=NO)
-        self.my_tree.column("Ano", anchor="center", width=100)
-        self.my_tree.column("UF", anchor="center", width=100)
-        self.my_tree.column("Porto", anchor="center", width=140)
-        self.my_tree.column("TipoNavegacao", anchor="center", width=140)
-        self.my_tree.column("Sentido", anchor="center", width=140)
-        self.my_tree.column("CDMercadoria", anchor="center", width=140)
-        self.my_tree.column("TEU", anchor="center", width=140)
-        self.my_tree.column("QTCarga", anchor="center", width=140)
-        self.my_tree.column("PesoCargaBruta", anchor="center", width=140)
-        self.my_tree.column("PesoCargaLiquida", anchor="center", width=140)
-        self.my_tree.column("ValorKgCarga", anchor="center", width=100)
-
-        # Criando Headings
-        self.my_tree.heading("#0", text="", anchor="w")
-        self.my_tree.heading("Ano", text="Ano", anchor="center")
-        self.my_tree.heading("UF", text="UF", anchor="center")
-        self.my_tree.heading("Porto", text="Porto", anchor="center")
-        self.my_tree.heading("TipoNavegacao", text="TipoNavegacao", anchor="center")
-        self.my_tree.heading("Sentido", text="Sentido", anchor="center")
-        self.my_tree.heading("CDMercadoria", text="CDMercadoria", anchor="center")
-        self.my_tree.heading("TEU", text="TEU", anchor="center")
-        self.my_tree.heading("QTCarga", text="QTCarga", anchor="center")
-        self.my_tree.heading("PesoCargaBruta", text="PesoCargaBruta", anchor="center")
-        self.my_tree.heading(
-            "PesoCargaLiquida", text="PesoCargaLiquida", anchor="center"
-        )
-        self.my_tree.heading("ValorKgCarga", text="ValorKgCarga", anchor="center")
-
+        # Preparando a tabela
+        for item_table in columns:
+            self.my_tree.column(item_table, anchor="center", width=120)
+            self.my_tree.heading(item_table, text=item_table, anchor="center")
+        
         # Inserindo dados na TreeView
         for index, row in self.port_cargo.iterrows():
-            self.my_tree.insert("", 0, text=index, values=list(row))
+            self.my_tree.insert("", "end", text=index, values=list(row))
+
+        notebook_size = self.my_notebook.index("end")
+        title = "Cluster "
+
+        if notebook_size == 0:
+            title = title+"1"
+        elif notebook_size == 1:
+            title = title+"2"
+        else:
+            title = title+str(notebook_size)
+
+        
+        self.my_notebook.add(self.tree_frame, text=title)
+
+    def filter_table(self, _=None):
+        self.my_tree.delete(*self.my_tree.get_children())
+
+        option = self.years_options.get()
+
+        if option != "Todos os anos":
+            years = [int(option)]
+        else:
+            years = self.years
+
+        port_cargo_year = self.port_cargo.loc[(self.port_cargo["Ano"].isin(years))]
+        port_cargo_filtered = port_cargo_year.loc[(port_cargo_year["Porto"].isin(self.data))]
+
+        for index, row in port_cargo_filtered.iterrows():
+            self.my_tree.insert("", "end", text=index, value=list(row))
 
     # def close_tab(self, _=None):
     #    self.frame.destroy()
