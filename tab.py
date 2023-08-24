@@ -1,4 +1,3 @@
-from tkinter import *
 from tkinter import ttk
 import pandas as pd
 
@@ -42,7 +41,7 @@ class Tab_table:
             height=500,
         )
         self.my_tree["columns"] = columns
-        self.my_tree.pack(expand=TRUE, fill=BOTH)
+        self.my_tree.pack(expand="true", fill="both")
 
         # Configuração da Scrollbar
         self.tree_scroll.config(command=self.my_tree.yview)

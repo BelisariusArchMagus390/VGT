@@ -1,4 +1,3 @@
-from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
@@ -10,7 +9,7 @@ import pandas as pd
 
 class App:
     def __init__(self):
-        self.root = Tk()
+        self.root = tk.Tk()
         self.root.title("TextPad")
         self.root.geometry("1200x30")
 
