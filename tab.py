@@ -1,5 +1,5 @@
 from tkinter import ttk
-import pandas as pd
+import pandas
 
 
 class Tab_table:
