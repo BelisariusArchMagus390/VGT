@@ -5,7 +5,7 @@ import pandas
 class Tab_table:
     def __init__(self, my_notebook: ttk.Notebook, data, port_cargo):
         self.data = data
-        self.port_cargo = port_cargo
+        self.port_cargo = port_cargo.loc[port_cargo["Porto"].isin(self.data)]
         self.years = self.port_cargo["Ano"].drop_duplicates().to_list()
 
         self.my_notebook = my_notebook
@@ -78,8 +78,8 @@ class Tab_table:
         else:
             years = self.years
 
-        port_cargo_year = self.port_cargo.loc[(self.port_cargo["Ano"].isin(years))]
-        port_cargo_filtered = port_cargo_year.loc[(port_cargo_year["Porto"].isin(self.data))]
+        port_cargo_filtered = self.port_cargo.loc[(self.port_cargo["Ano"].isin(years))]
+        # = port_cargo_year.loc[(port_cargo_year["Porto"].isin(self.data))]
 
         for index, row in port_cargo_filtered.iterrows():
             self.my_tree.insert("", "end", text=index, value=list(row))
