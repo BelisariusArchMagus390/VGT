@@ -10,8 +10,8 @@ class Tab_table:
         self.years = self.port_cargo["Ano"].drop_duplicates().to_list()
 
         self.my_notebook = my_notebook
-        self.bg_color = "#313131"
-        self.fg_color = "#ffffff"
+        # self.bg_color = "#313131"
+        # self.fg_color = "#ffffff"
 
         self.tree_frame = ttk.Frame(self.my_notebook)
         self.tree_frame.pack(fill="both", expand=1)

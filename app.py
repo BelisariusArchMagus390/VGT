@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
 from tab import Tab_table
@@ -36,17 +37,17 @@ class App:
         self.tabs = []
 
         # Menu
-        self.my_menu = Menu(self.root)
+        self.my_menu = tk.Menu(self.root)
         self.root.config(menu=self.my_menu)
 
         # Adiciona Run Menu
-        self.run_menu = Menu(self.my_menu, tearoff=False)
+        self.run_menu = tk.Menu(self.my_menu, tearoff=False)
         self.my_menu.add_cascade(label="Executar", menu=self.run_menu)
         self.run_menu.add_command(
             label="Executar", command=self.execute, accelerator="F5"
         )
 
-        self.graph_menu = Menu(self.my_menu, tearoff=False)
+        self.graph_menu = tk.Menu(self.my_menu, tearoff=False)
         self.my_menu.add_cascade(label="Gráficos", menu=self.graph_menu)
         self.graph_menu.add_command(
             label="Novo gráfico", command=self.new_graph, accelerator="Ctrl + G"
