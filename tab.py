@@ -79,7 +79,6 @@ class Tab_table:
             years = self.years
 
         port_cargo_filtered = self.port_cargo.loc[(self.port_cargo["Ano"].isin(years))]
-        # = port_cargo_year.loc[(port_cargo_year["Porto"].isin(self.data))]
 
         for index, row in port_cargo_filtered.iterrows():
             self.my_tree.insert("", "end", text=index, value=list(row))
