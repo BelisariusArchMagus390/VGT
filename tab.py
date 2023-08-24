@@ -16,6 +16,8 @@ class Tab_table:
         self.tree_frame = ttk.Frame(self.my_notebook)
         self.tree_frame.pack(fill="both", expand=1)
 
+        self.final_dataframe = port_cargo
+
         # Scrollbar vertical da Text box
         self.tree_scroll = ttk.Scrollbar(self.tree_frame)
         # Pack da Scrollbar
@@ -82,6 +84,11 @@ class Tab_table:
 
         for index, row in port_cargo_filtered.iterrows():
             self.my_tree.insert("", "end", text=index, value=list(row))
+
+        self.final_dataframe = port_cargo_filtered
+
+    def get_final_dataframe(self):
+        return self.final_dataframe
 
     """def change_color(self, bg_color, fg_color):
         self.my_text.config(background=bg_color, fg=fg_color)
